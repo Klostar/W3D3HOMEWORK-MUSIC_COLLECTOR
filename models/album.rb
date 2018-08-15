@@ -35,6 +35,18 @@ class Album
 
   end
 
+  def update
+    db = PG.connect({dbname:'music_collector', host:'localhost'})
+    sql = "UPDATE albums
+          SET title = $1,
+          genre = $2
+          WHERE id = $3"
+    values = [@title,@genre,@id]
+    db.prepare("update", sql)
+    db.exec_prepared("update", values)
+    db.close()
+  end
+
   def Album.all()
     db = PG.connect({dbname:'music_collector', host:'localhost'})
     sql = "SELECT * FROM albums"

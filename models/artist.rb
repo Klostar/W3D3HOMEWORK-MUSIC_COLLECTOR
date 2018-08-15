@@ -29,6 +29,17 @@ class Artist
     return result.map {|album|Album.new(album)}
   end
 
+def update
+  db = PG.connect({dbname:'music_collector', host:'localhost'})
+  sql = "UPDATE artists
+        SET name = $1
+        WHERE id = $2"
+  values = [@name, @id]
+  db.prepare("update", sql)
+  db.exec_prepared("update", values)
+  db.close()
+end
+
   def Artist.all()
     db = PG.connect({dbname:'music_collector', host:'localhost'})
     sql = "SELECT * FROM artists"
