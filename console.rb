@@ -26,6 +26,10 @@ album2 = Album.new({
   album1.save()
   album2.save()
 
+  artist1.delete()
+  artist2.delete()
+
+
 # artists = Artist.all()
 # albums = Album.all()
 
