@@ -49,6 +49,19 @@ def delete
   db.close()
 end
 
+def Artist.find(id)
+  db = PG.connect({dbname:'music_collector', host:'localhost'})
+  sql = "SELECT * FROM artists WHERE id = $1"
+  values = [id]
+  db.prepare("find", sql)
+  artist = db.exec_prepared("find", values)[0]
+  return Artist.new(artist)
+
+  db.close()
+
+end
+
+
   def Artist.all()
     db = PG.connect({dbname:'music_collector', host:'localhost'})
     sql = "SELECT * FROM artists"
